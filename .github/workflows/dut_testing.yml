@@ -1,4 +1,4 @@
-name: DUT Tests
+    runs-on: dut-testing
 
 on: [push, pull_request]
 
