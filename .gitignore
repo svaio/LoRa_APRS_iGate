@@ -6,7 +6,6 @@
 report.xml
 output
 dd6sw*
-is-cfg.json
 *.code-workspace
 src/data/*
 __pycache__
