@@ -15,40 +15,37 @@
 #include "TaskModem.h"
 #include "TaskNTP.h"
 #include "TaskOTA.h"
-#include "TaskRouter.h"
-#include "TaskWifi.h"
 #include "TaskPower.h"
+#include "TaskRouter.h"
 #include "TaskTelegram.h"
+#include "TaskWifi.h"
 #include "project_configuration.h"
 
-<<<<<<< HEAD
-#define VERSION "21.35.2"
-=======
 #define VERSION "21.50.0"
->>>>>>> e4ac459810c3c8ac33477267dec81f8f37e85942
 
 String create_lat_aprs(double lat);
 String create_long_aprs(double lng);
 
-TaskQueue<std::shared_ptr<APRSMessage>> toAprsIs;
-TaskQueue<std::shared_ptr<APRSMessage>> fromModem;
-TaskQueue<std::shared_ptr<APRSMessage>> toModem;
-TaskQueue<std::shared_ptr<APRSMessage>> fromPower;
+TaskQueue<std::shared_ptr<APRSExtMessage>>  toAprsIs;
+TaskQueue<std::shared_ptr<APRSExtMessage>>  fromModem;
+TaskQueue<std::shared_ptr<APRSExtMessage>>  toModem;
+TaskQueue<std::shared_ptr<APRSExtMessage>>  fromPower;
+TaskQueue<std::shared_ptr<TelegramMessage>> toTelegram;
 
 System        LoRaSystem;
 Configuration userConfig;
 
-DisplayTask displayTask;
-ModemTask   modemTask(fromModem, toModem);
-EthTask     ethTask;
-WifiTask    wifiTask;
-OTATask     otaTask;
-NTPTask     ntpTask;
-FTPTask     ftpTask;
-POWERTask   powerTask(fromPower);
-AprsIsTask  aprsIsTask(toAprsIs);
-RouterTask  routerTask(fromModem, toModem, toAprsIs);
-TelegramTask  telegramTask;
+DisplayTask  displayTask;
+ModemTask    modemTask(fromModem, toModem);
+EthTask      ethTask;
+WifiTask     wifiTask;
+OTATask      otaTask;
+NTPTask      ntpTask;
+FTPTask      ftpTask;
+PowerTask    powerTask(fromPower);
+AprsIsTask   aprsIsTask(toAprsIs);
+RouterTask   routerTask(fromModem, toModem, toAprsIs, toTelegram);
+TelegramTask telegramTask(toTelegram);
 
 void setup() {
   Serial.begin(115200);
@@ -110,7 +107,6 @@ void setup() {
   LoRaSystem.getTaskManager().addTask(&modemTask);
   LoRaSystem.getTaskManager().addTask(&routerTask);
 
-
   if (userConfig.aprs_is.active) {
     if (boardConfig->Type == eETH_BOARD && !userConfig.wifi.active) {
       LoRaSystem.getTaskManager().addAlwaysRunTask(&ethTask);
@@ -154,7 +150,6 @@ void setup() {
   }
 
   if (userConfig.display.overwritePin != 0) {
-    pinMode(userConfig.display.overwritePin, INPUT);
     pinMode(userConfig.display.overwritePin, INPUT_PULLUP);
   }
 

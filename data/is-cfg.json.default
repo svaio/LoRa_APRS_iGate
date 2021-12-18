@@ -18,8 +18,12 @@
 		"active": true,
 		"AP": [
 			{
-				"SSID": "",
-				"password": ""
+				"SSID": "SSID1",
+				"password": "PASS1"
+			},
+			{
+				"SSID": "SSID2",
+				"password": "PASS2"
 			}
 		]
 	},
@@ -62,6 +66,10 @@
 			{
 				"name": "ftp",
 				"password": "ftp"
+			},
+			{
+				"name": "ftp2",
+				"password": "ftp2"
 			}
 		]
 	},
@@ -74,7 +82,8 @@
 	"telegram": {
 		"active": false,
 		"chatid": "",
-		"bottoken": ""
+		"bottoken": "",
+	    "monitor": false
 	},
 	"ntp_server": "pool.ntp.org"
 }
