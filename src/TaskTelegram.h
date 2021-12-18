@@ -2,10 +2,10 @@
 #define TASK_Telegram_H_
 
 #include <TaskManager.h>
+#include <TelegramMessage.h>
 #include <UniversalTelegramBot.h>
 #include <WiFi.h>
 #include <WiFiClientSecure.h>
-#include <TelegramMessage.h>
 
 class TelegramTask : public Task {
 
@@ -17,18 +17,16 @@ public:
   virtual bool loop(System &system) override;
 
   TaskQueue<std::shared_ptr<TelegramMessage>> &_toTelegram;
-  
+
   std::shared_ptr<TelegramMessage> _telegramMsg;
 
-
 private:
-  UniversalTelegramBot * _telegram;
-  String                _chatid = "";
-  String                _bottoken = "";
+  UniversalTelegramBot *_telegram;
+  String                _chatid               = "";
+  String                _bottoken             = "";
   int                   _telegramRequestDelay = 1000;
-  unsigned long         _lastTimeTelegramRan = 0;
+  unsigned long         _lastTimeTelegramRan  = 0;
   WiFiClientSecure      _client;
-
 };
 
 #endif
