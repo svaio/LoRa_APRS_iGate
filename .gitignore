@@ -11,3 +11,5 @@ src/data/*
 __pycache__
 .pytest_cache
 spiffs.bin
+data/.DS_Store
+.vscode/extensions.json
