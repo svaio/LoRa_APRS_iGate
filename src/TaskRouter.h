@@ -8,7 +8,7 @@
 
 class RouterTask : public Task {
 public:
-  RouterTask(TaskQueue<std::shared_ptr<APRSExtMessage>> &fromModem, TaskQueue<std::shared_ptr<APRSExtMessage>> &toModem, TaskQueue<std::shared_ptr<APRSExtMessage>> &toAprsIs, TaskQueue<std::shared_ptr<TelegramMessage>> &toTelegram, TaskQueue<std::shared_ptr<APRSExtMessage>> &toMQTT);
+  RouterTask(TaskQueue<std::shared_ptr<APRSExtMessage>> &fromModem, TaskQueue<std::shared_ptr<APRSExtMessage>> &toModem, TaskQueue<std::shared_ptr<APRSExtMessage>> &toAprsIs, TaskQueue<std::shared_ptr<APRSExtMessage>> &toMQTT, TaskQueue<std::shared_ptr<TelegramMessage>> &toTelegram);
   virtual ~RouterTask();
 
   virtual bool setup(System &system) override;

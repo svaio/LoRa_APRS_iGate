@@ -135,45 +135,46 @@ public:
     String chatid;
     String bottoken;
     bool   monitor;
-
-    class MQTT {
-    public:
-      bool     active;
-      String   server;
-      uint16_t port;
-      String   name;
-      String   password;
-      String   topic;
-    };
-
-    Configuration() : callsign("NOCALL-10"), board(""), ntpServer("pool.ntp.org"){};
-
-    String            callsign;
-    Network           network;
-    Wifi              wifi;
-    Beacon            beacon;
-    APRS_IS           aprs_is;
-    Digi              digi;
-    LoRa              lora;
-    Display           display;
-    Ftp               ftp;
-    String            board;
-    String            ntpServer;
-    Telegram          telegram;
-    PowerManagmentADC power;
-    MQTT              mqtt;
   };
 
-  class ProjectConfigurationManagement : public ConfigurationManagement {
+  class MQTT {
   public:
-    explicit ProjectConfigurationManagement() : ConfigurationManagement("/is-cfg.json") {
-    }
-    virtual ~ProjectConfigurationManagement() {
-    }
-
-  private:
-    virtual void readProjectConfiguration(DynamicJsonDocument &data, Configuration &conf) override;
-    virtual void writeProjectConfiguration(Configuration &conf, DynamicJsonDocument &data) override;
+    bool     active;
+    String   server;
+    uint16_t port;
+    String   name;
+    String   password;
+    String   topic;
   };
+
+  Configuration() : callsign("NOCALL-10"), board(""), ntpServer("pool.ntp.org"){};
+
+  String            callsign;
+  Network           network;
+  Wifi              wifi;
+  Beacon            beacon;
+  APRS_IS           aprs_is;
+  Digi              digi;
+  LoRa              lora;
+  Display           display;
+  Ftp               ftp;
+  Telegram          telegram;
+  PowerManagmentADC power;
+  MQTT              mqtt;
+  String            board;
+  String            ntpServer;
+};
+
+class ProjectConfigurationManagement : public ConfigurationManagement {
+public:
+  explicit ProjectConfigurationManagement() : ConfigurationManagement("/is-cfg.json") {
+  }
+  virtual ~ProjectConfigurationManagement() {
+  }
+
+private:
+  virtual void readProjectConfiguration(DynamicJsonDocument &data, Configuration &conf) override;
+  virtual void writeProjectConfiguration(Configuration &conf, DynamicJsonDocument &data) override;
+};
 
 #endif

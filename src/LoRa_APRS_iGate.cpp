@@ -47,7 +47,7 @@ PowerTask    powerTask(fromPower);
 MQTTTask     mqttTask(toMQTT);
 AprsIsTask   aprsIsTask(toAprsIs);
 TelegramTask telegramTask(toTelegram);
-RouterTask   routerTask(fromModem, toModem, toAprsIs, toTelegram, toMQTT);
+RouterTask   routerTask(fromModem, toModem, toAprsIs, toMQTT, toTelegram);
 
 void setup() {
   Serial.begin(115200);
@@ -132,59 +132,61 @@ void setup() {
 
   if (userConfig.telegram.active) {
     LoRaSystem.getTaskManager().addTask(&telegramTask);
-    if (userConfig.mqtt.active) {
-      LoRaSystem.getTaskManager().addTask(&mqttTask);
-    }
-
-    LoRaSystem.getTaskManager().setup(LoRaSystem);
-
-    LoRaSystem.getDisplay().showSpashScreen("LoRa APRS iGate", VERSION);
-
-    if (userConfig.callsign == "NOCALL-10") {
-      logPrintlnE("You have to change your settings in 'data/is-cfg.json' and upload it via \"Upload File System image\"!");
-      LoRaSystem.getDisplay().showStatusScreen("ERROR", "You have to change your settings in 'data/is-cfg.json' and upload it via \"Upload File System image\"!");
-      while (true)
-        ;
-    }
-    if ((!userConfig.aprs_is.active) && !(userConfig.digi.active)) {
-      logPrintlnE("No mode selected (iGate or Digi)! You have to activate one of iGate or Digi.");
-      LoRaSystem.getDisplay().showStatusScreen("ERROR", "No mode selected (iGate or Digi)! You have to activate one of iGate or Digi.");
-      while (true)
-        ;
-    }
-
-    if (userConfig.display.overwritePin != 0) {
-      pinMode(userConfig.display.overwritePin, INPUT_PULLUP);
-    }
-
-    delay(5000);
-    logPrintlnI("setup done...");
+  }
+  if (userConfig.mqtt.active) {
+    LoRaSystem.getTaskManager().addTask(&mqttTask);
   }
 
-  void loop() {
-    LoRaSystem.getTaskManager().loop(LoRaSystem);
+  LoRaSystem.getTaskManager().setup(LoRaSystem);
+
+  LoRaSystem.getDisplay().showSpashScreen("LoRa APRS iGate", VERSION);
+
+  if (userConfig.callsign == "NOCALL-10") {
+    logPrintlnE("You have to change your settings in 'data/is-cfg.json' and upload it via \"Upload File System image\"!");
+    LoRaSystem.getDisplay().showStatusScreen("ERROR", "You have to change your settings in 'data/is-cfg.json' and upload it via \"Upload File System image\"!");
+    while (true)
+      ;
+  }
+  if ((!userConfig.aprs_is.active) && !(userConfig.digi.active)) {
+    logPrintlnE("No mode selected (iGate or Digi)! You have to activate one of iGate or Digi.");
+    LoRaSystem.getDisplay().showStatusScreen("ERROR", "No mode selected (iGate or Digi)! You have to activate one of iGate or Digi.");
+    while (true)
+      ;
   }
 
-  String create_lat_aprs(double lat) {
-    char str[20];
-    char n_s = 'N';
-    if (lat < 0) {
-      n_s = 'S';
-    }
-    lat = std::abs(lat);
-    sprintf(str, "%02d%05.2f%c", (int)lat, (lat - (double)((int)lat)) * 60.0, n_s);
-    String lat_str(str);
-    return lat_str;
+  if (userConfig.display.overwritePin != 0) {
+    pinMode(userConfig.display.overwritePin, INPUT);
+    pinMode(userConfig.display.overwritePin, INPUT_PULLUP);
   }
 
-  String create_long_aprs(double lng) {
-    char str[20];
-    char e_w = 'E';
-    if (lng < 0) {
-      e_w = 'W';
-    }
-    lng = std::abs(lng);
-    sprintf(str, "%03d%05.2f%c", (int)lng, (lng - (double)((int)lng)) * 60.0, e_w);
-    String lng_str(str);
-    return lng_str;
+  delay(5000);
+  logPrintlnI("setup done...");
+}
+
+void loop() {
+  LoRaSystem.getTaskManager().loop(LoRaSystem);
+}
+
+String create_lat_aprs(double lat) {
+  char str[20];
+  char n_s = 'N';
+  if (lat < 0) {
+    n_s = 'S';
   }
+  lat = std::abs(lat);
+  sprintf(str, "%02d%05.2f%c", (int)lat, (lat - (double)((int)lat)) * 60.0, n_s);
+  String lat_str(str);
+  return lat_str;
+}
+
+String create_long_aprs(double lng) {
+  char str[20];
+  char e_w = 'E';
+  if (lng < 0) {
+    e_w = 'W';
+  }
+  lng = std::abs(lng);
+  sprintf(str, "%03d%05.2f%c", (int)lng, (lng - (double)((int)lng)) * 60.0, e_w);
+  String lng_str(str);
+  return lng_str;
+}

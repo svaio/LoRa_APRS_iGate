@@ -9,7 +9,7 @@
 String create_lat_aprs(double lat);
 String create_long_aprs(double lng);
 
-RouterTask::RouterTask(TaskQueue<std::shared_ptr<APRSExtMessage>> &fromModem, TaskQueue<std::shared_ptr<APRSExtMessage>> &toModem, TaskQueue<std::shared_ptr<APRSExtMessage>> &toAprsIs, TaskQueue<std::shared_ptr<TelegramMessage>> &toTelegram), TaskQueue<std::shared_ptr<APRSExtMessage>> &toMQTT) : Task(TASK_ROUTER, TaskRouter), _fromModem(fromModem), _toModem(toModem), _toAprsIs(toAprsIs), _toTelegram(toTelegram), _toMQTT(toMQTT) {
+RouterTask::RouterTask(TaskQueue<std::shared_ptr<APRSExtMessage>> &fromModem, TaskQueue<std::shared_ptr<APRSExtMessage>> &toModem, TaskQueue<std::shared_ptr<APRSExtMessage>> &toAprsIs, TaskQueue<std::shared_ptr<APRSExtMessage>> &toMQTT, TaskQueue<std::shared_ptr<TelegramMessage>> &toTelegram) : Task(TASK_ROUTER, TaskRouter), _fromModem(fromModem), _toModem(toModem), _toAprsIs(toAprsIs), _toMQTT(toMQTT), _toTelegram(toTelegram) {
 }
 
 RouterTask::~RouterTask() {
