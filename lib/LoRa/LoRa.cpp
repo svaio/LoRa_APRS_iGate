@@ -129,7 +129,7 @@ int LoRaClass::begin(long frequency) {
   writeRegister(REG_FIFO_RX_BASE_ADDR, 0);
 
   // set LNA boost
-  writeRegister(REG_LNA, readRegister(REG_LNA) | 0x03);
+  writeRegister(REG_LNA, readRegister(REG_LNA) | 0x01);
 
   // set auto AGC
   writeRegister(REG_MODEM_CONFIG_3, 0x04);
@@ -564,7 +564,7 @@ void LoRaClass::setGain(uint8_t gain) {
     writeRegister(REG_MODEM_CONFIG_3, 0x00);
 
     // clear Gain and set LNA boost
-    writeRegister(REG_LNA, 0x03);
+    writeRegister(REG_LNA, 0x01);
 
     // set gain
     writeRegister(REG_LNA, readRegister(REG_LNA) | (gain << 5));

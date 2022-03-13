@@ -11,6 +11,7 @@ enum TaskNames
   TaskOta,
   TaskWifi,
   TaskRouter,
+  TaskMQTT,
   TaskSize,
   TaskTelegram
 };
@@ -23,6 +24,7 @@ enum TaskNames
 #define TASK_OTA      "OTATask"
 #define TASK_WIFI     "WifiTask"
 #define TASK_ROUTER   "RouterTask"
+#define TASK_MQTT     "MQTTTask"
 #define TASK_Telegram "TelegramTask"
 
 #endif

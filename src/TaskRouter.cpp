@@ -9,7 +9,7 @@
 String create_lat_aprs(double lat);
 String create_long_aprs(double lng);
 
-RouterTask::RouterTask(TaskQueue<std::shared_ptr<APRSExtMessage>> &fromModem, TaskQueue<std::shared_ptr<APRSExtMessage>> &toModem, TaskQueue<std::shared_ptr<APRSExtMessage>> &toAprsIs, TaskQueue<std::shared_ptr<TelegramMessage>> &toTelegram) : Task(TASK_ROUTER, TaskRouter), _fromModem(fromModem), _toModem(toModem), _toAprsIs(toAprsIs), _toTelegram(toTelegram) {
+RouterTask::RouterTask(TaskQueue<std::shared_ptr<APRSExtMessage>> &fromModem, TaskQueue<std::shared_ptr<APRSExtMessage>> &toModem, TaskQueue<std::shared_ptr<APRSExtMessage>> &toAprsIs, TaskQueue<std::shared_ptr<TelegramMessage>> &toTelegram), TaskQueue<std::shared_ptr<APRSExtMessage>> &toMQTT) : Task(TASK_ROUTER, TaskRouter), _fromModem(fromModem), _toModem(toModem), _toAprsIs(toAprsIs), _toTelegram(toTelegram), _toMQTT(toMQTT) {
 }
 
 RouterTask::~RouterTask() {
@@ -38,6 +38,10 @@ bool RouterTask::loop(System &system) {
   if (!_fromModem.empty()) {
     std::shared_ptr<APRSExtMessage> modemMsg = _fromModem.getElement();
 
+    if (system.getUserConfig()->mqtt.active) {
+      _toMQTT.addElement(modemMsg);
+    }
+
     if (system.getUserConfig()->aprs_is.active && modemMsg->getSource() != system.getUserConfig()->callsign) {
       std::shared_ptr<APRSExtMessage> aprsIsMsg = std::make_shared<APRSExtMessage>(*modemMsg);
       String                          path      = aprsIsMsg->getPath();
@@ -47,7 +51,7 @@ bool RouterTask::loop(System &system) {
           path += ",";
         }
 
-        aprsIsMsg->setPath(path + "qAR," + system.getUserConfig()->callsign);
+        aprsIsMsg->setPath(path + "qAO," + system.getUserConfig()->callsign);
 
         logPrintD("APRS-IS: ");
         logPrintlnD(aprsIsMsg->toString());
