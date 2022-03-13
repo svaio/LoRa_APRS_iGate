@@ -13,3 +13,4 @@ __pycache__
 spiffs.bin
 data/.DS_Store
 .vscode/extensions.json
+data/is-cfg.json

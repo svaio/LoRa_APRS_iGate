@@ -1,5 +1,5 @@
 {
-	"callsign": "NOCODE-11",
+	"callsign": "NOCALL-10",
 	"network": {
 		"DHCP": true,
 		"static": {
@@ -18,32 +18,28 @@
 		"active": true,
 		"AP": [
 			{
-				"SSID": "SSID1",
-				"password": "PASS1"
-			},
-			{
-				"SSID": "SSID2",
-				"password": "PASS2"
+				"SSID": "YOURSSID",
+				"password": "YOURPASSWORD"
 			}
 		]
 	},
 	"beacon": {
 		"message": "LoRa iGATE & Digi, Info: github.com/lora-aprs/LoRa_APRS_iGate",
 		"position": {
-			"latitude": 0.0,
-			"longitude": 0.0
+			"latitude": 0.000000,
+			"longitude": 0.000000
 		},
 		"timeout": 15
 	},
 	"aprs_is": {
 		"active": true,
-		"passcode": "22261",
+		"passcode": "",
 		"server": "euro.aprs2.net",
 		"port": 14580
 	},
 	"digi": {
 		"active": false,
-		"beacon": true
+		"beacon": false
 	},
 	"lora": {
 		"frequency_rx": 433775000,
@@ -61,15 +57,11 @@
 		"turn180": true
 	},
 	"ftp": {
-		"active": true,
+		"active": false,
 		"user": [
 			{
 				"name": "ftp",
 				"password": "ftp"
-			},
-			{
-				"name": "ftp2",
-				"password": "ftp2"
 			}
 		]
 	},
@@ -84,6 +76,14 @@
 		"chatid": "",
 		"bottoken": "",
 	    "monitor": false
+	},
+	"mqtt": {
+		"active": false,
+		"server": "",
+		"port": 1883,
+		"name": "",
+		"password": "",
+		"topic": "LoraAPRS/Data"
 	},
 	"ntp_server": "pool.ntp.org"
 }
