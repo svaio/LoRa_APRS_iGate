@@ -5,3 +5,10 @@
 .vscode/ipch
 report.xml
 output
+data/dd6sw-11.is-cfg.json
+data/dd6sw-12.is-cfg.json
+.gitignore
+data/.DS_Store
+workspace.code-workspace
+.vscode/extensions.json
+.gitignore
