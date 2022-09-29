@@ -1,6 +1,7 @@
 #ifndef SYSTEM_H_
 #define SYSTEM_H_
 
+#include <logger.h>
 #include <memory>
 
 #include "TaskManager.h"
@@ -16,28 +17,33 @@ public:
   void setBoardConfig(BoardConfig const *const boardConfig);
   void setUserConfig(Configuration const *const userConfig);
 
-  BoardConfig const *const         getBoardConfig() const;
-  Configuration const *const       getUserConfig() const;
-  DynamicJsonDocument const *const getDataConfig() const;
-  TaskManager &                    getTaskManager();
-  Display &                        getDisplay();
-  bool                             isWifiEthConnected() const;
-  bool                             isCopyToTelegram() const;
-  void                             setCopyToTelegram();
-  void                             unsetCopyToTelegram();
-  void                             connectedViaWifiEth(bool status);
-  double                           getVoltage();
-  void                             setVoltage(double last_voltage);
+  BoardConfig const *const   getBoardConfig() const;
+  Configuration const *const getUserConfig() const;
+  TaskManager               &getTaskManager();
+  Display                   &getDisplay();
+  bool                       isWifiOrEthConnected() const;
+  void                       connectedViaEth(bool status);
+  void                       connectedViaWifi(bool status);
+  logging::Logger           &getLogger();
+  bool                       isCopyToTelegram() const;
+  void                       setCopyToTelegram();
+  void                       unsetCopyToTelegram();
+  double                     getVoltage();
+  void                       setVoltage(double last_voltage);
+
+  DynamicJsonDocument const *const getDataConfig() const; // todo, delete?
 
 private:
-  BoardConfig const *        _boardConfig;
-  Configuration const *      _userConfig;
-  DynamicJsonDocument const *_dataConfig;
+  BoardConfig const         *_boardConfig;
+  Configuration const       *_userConfig;
   TaskManager                _taskManager;
   Display                    _display;
-  bool                       _isWifiEthConnected;
+  bool                       _isEthConnected;
+  bool                       _isWifiConnected;
+  logging::Logger            _logger;
   bool                       _copyToTelegram = false;
   double                     _voltage        = 0.0;
+  DynamicJsonDocument const *_dataConfig; // todo, delete?
 };
 
 #endif

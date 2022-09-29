@@ -48,12 +48,13 @@ public:
 
   class Beacon {
   public:
-    Beacon() : message("LoRa iGATE & Digi, Info: github.com/peterus/LoRa_APRS_iGate"), positionLatitude(0.0), positionLongitude(0.0), timeout(15) {
+    Beacon() : message("LoRa iGATE & Digi, Info: github.com/peterus/LoRa_APRS_iGate"), positionLatitude(0.0), positionLongitude(0.0), use_gps(false), timeout(15) {
     }
 
     String message;
     double positionLatitude;
     double positionLongitude;
+    bool   use_gps;
     int    timeout;
   };
 
@@ -79,7 +80,7 @@ public:
 
   class LoRa {
   public:
-    LoRa() : frequencyRx(433775000), frequencyTx(433775000), power(20), spreadingFactor(12), signalBandwidth(125000), codingRate4(5) {
+    LoRa() : frequencyRx(433775000), frequencyTx(433775000), power(20), spreadingFactor(12), signalBandwidth(125000), codingRate4(5), tx_enable(true) {
     }
 
     long    frequencyRx;
@@ -89,6 +90,7 @@ public:
     int     spreadingFactor;
     long    signalBandwidth;
     int     codingRate4;
+    bool    tx_enable;
   };
 
   class Display {
@@ -117,6 +119,29 @@ public:
     std::list<User> users;
   };
 
+  class MQTT {
+  public:
+    MQTT() : active(false), server(""), port(1883), name(""), password(""), topic("LoraAPRS/Data") {
+    }
+
+    bool   active;
+    String server;
+    int    port;
+    String name;
+    String password;
+    String topic;
+  };
+
+  class Syslog {
+  public:
+    Syslog() : active(true), server("syslog.lora-aprs.info"), port(514) {
+    }
+
+    bool   active;
+    String server;
+    int    port;
+  };
+
   class PowerManagmentADC {
   public:
     PowerManagmentADC() : active(true), pin(35), max_voltage(4.7), min_voltage(3.0) {
@@ -137,26 +162,29 @@ public:
     bool   monitor;
   };
 
-  Configuration() : callsign("NOCALL-10"), board(""), ntpServer("pool.ntp.org"){};
+  Configuration() : callsign("NOCALL-10"), ntpServer("pool.ntp.org"), board("") {
+  }
 
-  String            callsign;
-  Network           network;
-  Wifi              wifi;
-  Beacon            beacon;
-  APRS_IS           aprs_is;
-  Digi              digi;
-  LoRa              lora;
-  Display           display;
-  Ftp               ftp;
-  String            board;
-  String            ntpServer;
-  Telegram          telegram;
+  String  callsign;
+  Network network;
+  Wifi    wifi;
+  Beacon  beacon;
+  APRS_IS aprs_is;
+  Digi    digi;
+  LoRa    lora;
+  Display display;
+  Ftp     ftp;
+  MQTT    mqtt;
+  Syslog  syslog;
+  String  ntpServer;
+  String  board;
+    Telegram          telegram;
   PowerManagmentADC power;
 };
 
 class ProjectConfigurationManagement : public ConfigurationManagement {
 public:
-  explicit ProjectConfigurationManagement() : ConfigurationManagement("/is-cfg.json") {
+  explicit ProjectConfigurationManagement(logging::Logger &logger) : ConfigurationManagement(logger, "/is-cfg.json") {
   }
   virtual ~ProjectConfigurationManagement() {
   }
