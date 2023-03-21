@@ -12,3 +12,6 @@ data/.DS_Store
 workspace.code-workspace
 .vscode/extensions.json
 .gitignore
+LoRa_APRS_iGate.code-workspace
+
+data/dd6sw-10.is-cfg.json
