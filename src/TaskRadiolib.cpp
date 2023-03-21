@@ -23,8 +23,8 @@ void RadiolibTask::setFlag(void) {
 }
 
 bool RadiolibTask::setup(System &system) {
-  SPI.begin(system.getBoardConfig()->LoraSck, system.getBoardConfig()->LoraMiso, system.getBoardConfig()->LoraMosi, system.getBoardConfig()->LoraCS);
-  module = new Module(system.getBoardConfig()->LoraCS, system.getBoardConfig()->LoraIRQ, system.getBoardConfig()->LoraReset);
+  SPI.begin(system.getBoardConfig()->Lora.Sck, system.getBoardConfig()->Lora.Miso, system.getBoardConfig()->Lora.Mosi, system.getBoardConfig()->Lora.CS);
+  module = new Module(system.getBoardConfig()->Lora.CS, system.getBoardConfig()->Lora.IRQ, system.getBoardConfig()->Lora.Reset);
   radio  = new SX1278(module);
 
   config = system.getUserConfig()->lora;
@@ -100,6 +100,10 @@ bool RadiolibTask::setup(System &system) {
     }
   }
 
+  if (config.power > 17 && config.tx_enable) {
+    radio->setCurrentLimit(140);
+  }
+
   preambleDurationMilliSec = ((uint64_t)(preambleLength + 4) << (config.spreadingFactor + 10 /* to milli-sec */)) / config.signalBandwidth;
 
   _stateInfo = "";
@@ -134,7 +138,7 @@ bool RadiolibTask::loop(System &system) {
         system.getLogger().log(logging::LoggerLevel::LOGGER_LEVEL_ERROR, getName(), "[%s] readData failed, code %d", timeString().c_str(), state);
       } else {
         if (str.substring(0, 3) != "<\xff\x01") {
-          system.getLogger().log(logging::LoggerLevel::LOGGER_LEVEL_DEBUG, getName(), "[%s] Unknown packet '%s' with RSSI %.0fdBm, SNR %.2fdB and FreqErr %fHz%s", timeString().c_str(), str.c_str(), radio->getRSSI(), radio->getSNR(), -radio->getFrequencyError());
+          system.getLogger().log(logging::LoggerLevel::LOGGER_LEVEL_DEBUG, getName(), "[%s] Unknown packet '%s' with RSSI %.0fdBm, SNR %.2fdB and FreqErr %fHz", timeString().c_str(), str.c_str(), radio->getRSSI(), radio->getSNR(), -radio->getFrequencyError());
         } else {
           std::shared_ptr<APRSMessage> msg = std::shared_ptr<APRSMessage>(new APRSMessage());
           msg->decode(str.substring(3));
