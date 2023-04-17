@@ -1,5 +1,5 @@
 {
-	"callsign": "DD6SW-11",
+	"callsign": "NOCALL-10",
 	"network": {
 		"DHCP": true,
 		"static": {
@@ -11,30 +11,30 @@
 		},
 		"hostname": {
 			"overwrite": false,
-			"name": "DD6SW-11"
+			"name": "NOCALL-10"
 		}
 	},
 	"wifi": {
 		"active": true,
 		"AP": [
 			{
-				"SSID": "PortalE",
-				"password": "XWpBQRpU4N"
+				"SSID": "YOURSSID",
+				"password": "YOURPASSWORD"
 			}
 		]
 	},
 	"beacon": {
 		"message": "LoRa iGATE & Digi, Info: github.com/lora-aprs/LoRa_APRS_iGate",
 		"position": {
-			"latitude": 52.5108,
-			"longitude": 13.27167
+			"latitude": 0.000000,
+			"longitude": 0.000000
 		},
 		"use_gps": false,
 		"timeout": 15
 	},
 	"aprs_is": {
 		"active": true,
-		"passcode": "22261",
+		"passcode": "",
 		"server": "euro.aprs2.net",
 		"port": 14580
 	},
@@ -63,16 +63,16 @@
 		"user": [
 			{
 				"name": "ftp",
-				"password": "alarm99"
+				"password": "ftp"
 			}
 		]
 	},
 	"mqtt": {
-		"active": true,
-		"server": "10.27.1.62",
+		"active": false,
+		"server": "",
 		"port": 1883,
-		"name": "dd6sw-12",
-		"password": "wcqviert74356329cc",
+		"name": "",
+		"password": "",
 		"topic": "LoraAPRS/Data"
 	},
 	"syslog": {
