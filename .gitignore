@@ -16,3 +16,6 @@ workspace.code-workspace
 .gitignore
 LoRa_APRS_iGate.code-workspace
 
+data.private/dd6sw-12.is-cfg.json
+.gitignore
+data.private/dd6sw-10.is-cfg.json
