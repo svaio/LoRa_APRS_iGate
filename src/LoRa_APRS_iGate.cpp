@@ -22,7 +22,7 @@
 #include "TaskWifi.h"
 #include "project_configuration.h"
 
-#define VERSION     "23.06.0"
+#define VERSION     "23.23.99"
 #define MODULE_NAME "Main"
 
 String create_lat_aprs(double lat);
@@ -37,7 +37,7 @@ System        LoRaSystem;
 Configuration userConfig;
 
 DisplayTask displayTask;
-// ModemTask   modemTask(fromModem, toModem);
+//  ModemTask   modemTask(fromModem, toModem);
 RadiolibTask modemTask(fromModem, toModem);
 EthTask      ethTask;
 WifiTask     wifiTask;
@@ -45,7 +45,7 @@ OTATask      otaTask;
 NTPTask      ntpTask;
 FTPTask      ftpTask;
 MQTTTask     mqttTask(toMQTT);
-AprsIsTask   aprsIsTask(toAprsIs);
+AprsIsTask   aprsIsTask(toAprsIs, toModem);
 RouterTask   routerTask(fromModem, toModem, toAprsIs, toMQTT);
 BeaconTask   beaconTask(toModem, toAprsIs);
 
