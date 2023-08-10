@@ -22,7 +22,7 @@
 #include "TaskWifi.h"
 #include "project_configuration.h"
 
-#define VERSION     "23.23.99"
+#define VERSION     "23.31.01"
 #define MODULE_NAME "Main"
 
 String create_lat_aprs(double lat);
@@ -60,15 +60,16 @@ void setup() {
   std::list<BoardConfig const *> boardConfigs;
   boardConfigs.push_back(&TTGO_LORA32_V1);
   boardConfigs.push_back(&TTGO_LORA32_V2);
-  boardConfigs.push_back(&TTGO_T_Beam_V0_7);
-  boardConfigs.push_back(&TTGO_T_Beam_V1_0);
+  boardConfigs.push_back(&HELTEC_WIFI_LORA_32_V1);
+  boardConfigs.push_back(&HELTEC_WIFI_LORA_32_V2);
+  boardConfigs.push_back(&HELTEC_WIFI_LORA_32_V3);
   boardConfigs.push_back(&LILYGO_POE_ETH_BOARD);
   boardConfigs.push_back(&WT32_ETH_BOARD);
   boardConfigs.push_back(&TRACKERD);
-  boardConfigs.push_back(&HELTEC_WIFI_LORA_32_V1);
-  boardConfigs.push_back(&HELTEC_WIFI_LORA_32_V2);
   boardConfigs.push_back(&GUALTHERIUS_LORAHAM_v100);
   boardConfigs.push_back(&GUALTHERIUS_LORAHAM_v106);
+  boardConfigs.push_back(&TTGO_T_Beam_V0_7);
+  boardConfigs.push_back(&TTGO_T_Beam_V1_0);
 
   ProjectConfigurationManagement confmg(LoRaSystem.getLogger());
   confmg.readConfiguration(LoRaSystem.getLogger(), userConfig);
