@@ -5,9 +5,6 @@
 .vscode/ipch
 report.xml
 output
-data/dd6sw-10.is-cfg.json
-data/dd6sw-11.is-cfg.json
-data/dd6sw-12.is-cfg.json
 data/is-cfg.json
 .gitignore
 data/.DS_Store
@@ -15,8 +12,4 @@ workspace.code-workspace
 .vscode/extensions.json
 .gitignore
 LoRa_APRS_iGate.code-workspace
-
-data.private/dd6sw-12.is-cfg.json
-.gitignore
-data.private/dd6sw-10.is-cfg.json
-data.private/is-cfg.json
+data.private/*
