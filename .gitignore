@@ -13,3 +13,4 @@ workspace.code-workspace
 .gitignore
 LoRa_APRS_iGate.code-workspace
 data.private/*
+.DS_Store
