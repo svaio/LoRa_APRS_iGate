@@ -21,16 +21,22 @@ public:
   int8_t Addr;
 };
 
+enum LoraModem {
+  eSX1278,
+  eSX1268,
+};
+
 class LoraPins {
 public:
-  explicit LoraPins(int8_t sck, int8_t miso, int8_t mosi, int8_t cs, int8_t reset, int8_t irq);
+  explicit LoraPins(int8_t sck, int8_t miso, int8_t mosi, int8_t cs, int8_t reset, int8_t irq, LoraModem modem);
 
-  int8_t Sck;
-  int8_t Miso;
-  int8_t Mosi;
-  int8_t CS;
-  int8_t Reset;
-  int8_t IRQ;
+  int8_t    Sck;
+  int8_t    Miso;
+  int8_t    Mosi;
+  int8_t    CS;
+  int8_t    Reset;
+  int8_t    IRQ;
+  LoraModem Modem;
 };
 
 class GpsPins {
@@ -69,6 +75,7 @@ public:
 enum BoardType {
   eHELTEC_WIFI_LORA_32_V1,
   eHELTEC_WIFI_LORA_32_V2,
+  eHELTEC_WIFI_LORA_32_V3,
   eTTGO_LORA32_V1,
   eTTGO_LORA32_V2,
   eTTGO_T_Beam_V0_7,
@@ -125,6 +132,7 @@ extern BoardConfig WT32_ETH_BOARD;
 extern BoardConfig TRACKERD;
 extern BoardConfig HELTEC_WIFI_LORA_32_V1;
 extern BoardConfig HELTEC_WIFI_LORA_32_V2;
+extern BoardConfig HELTEC_WIFI_LORA_32_V3;
 extern BoardConfig GUALTHERIUS_LORAHAM_v100;
 extern BoardConfig GUALTHERIUS_LORAHAM_v106;
 
